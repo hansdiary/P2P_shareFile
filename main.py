@@ -1,5 +1,13 @@
 import socket
 import threading
+import hashlib
+
+def hashFile(filename):
+    h = hashlib.sha256()
+    with open(filename, "rb") as f:
+        while chunk := f.read(4096):
+            h.update(chunk)
+    return h.hexdigest()         
 
 def startServer(host="127.0.0.1", port=5000, filename="noms.txt"):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
